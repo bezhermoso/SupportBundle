@@ -45,12 +45,18 @@
 
         <service id="bez_support.form_type.ticket" class="Bez\SupportBundle\Form\TicketType">
             <argument>%bez_support.orm.ticket_class%</argument>
+            <argument type="service" id="security.context" />
             <tag name="form.type" alias="bez_support_ticket" />
         </service>
 
         <service id="bez_support.form_type.comment" class="Bez\SupportBundle\Form\CommentType">
             <argument>%bez_support.orm.comment_class%</argument>
+            <argument type="service" id="security.context" />
             <tag name="form.type" alias="bez_support_comment" />
+        </service>
+
+        <service id="bez_support.form_type.author" class="Bez\SupportBundle\Form\AuthorType">
+            <tag name="form.type" alias="bez_support_author" />
         </service>
     </services>
 </container>

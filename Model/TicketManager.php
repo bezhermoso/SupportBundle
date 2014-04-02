@@ -10,6 +10,7 @@ namespace Bez\SupportBundle\Model;
 
 
 use Bez\SupportBundle\Entity\AuthorInterface;
+use Bez\SupportBundle\Entity\GuestCompositionInterface;
 use Bez\SupportBundle\Entity\TicketInterface;
 
 /**

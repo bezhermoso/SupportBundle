@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Class TicketType
@@ -19,12 +20,16 @@ class TicketType extends AbstractType
 {
     protected $ticketClass;
 
+    protected $security;
+
     /**
      * @param $ticketClass
+     * @param SecurityContextInterface $security
      */
-    public function __construct($ticketClass)
+    public function __construct($ticketClass, SecurityContextInterface $security)
     {
         $this->ticketClass = $ticketClass;
+        $this->security = $security;
     }
 
     /**
@@ -37,14 +42,14 @@ class TicketType extends AbstractType
             ->add('subject', 'text')
             ->add('body', 'textarea');
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPresetData'));
+        $builder->addEventListener(FormEvents::POST_SET_DATA, array($this, 'onPostsetData'));
 
     }
 
     /**
      * @param FormEvent $event
      */
-    public function onPresetData(FormEvent $event)
+    public function onPostsetData(FormEvent $event)
     {
         $ticket = $event->getData();
 
@@ -55,6 +60,11 @@ class TicketType extends AbstractType
         if ($ticket->getId()) {
             $event->getForm()->remove('subject');
         }
+
+        if ($ticket->getAuthor()) {
+            $event->getForm()->add('author', 'bez_support_author');
+        }
+
     }
     
     /**

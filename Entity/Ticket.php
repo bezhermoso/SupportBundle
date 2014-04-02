@@ -79,8 +79,13 @@ abstract class Ticket implements TicketInterface, GuestCompositionInterface
     /**
      * @param \Bez\SupportBundle\Entity\AuthorInterface $author
      */
-    public function setAuthor(AuthorInterface $author)
+    public function setAuthor(AuthorInterface $author = NULL)
     {
+        if ($author == null) {
+            $this->authorEmail = null;
+            $this->authorName = null;
+        }
+
         $this->author = $author;
     }
 
@@ -92,6 +97,7 @@ abstract class Ticket implements TicketInterface, GuestCompositionInterface
         if (!$this->author && ($this->authorName !== null || $this->authorEmail !== null)) {
             $this->author = new GuestAuthor($this);
         }
+        return $this->author;
     }
 
     /**

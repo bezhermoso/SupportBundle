@@ -1,0 +1,10 @@
+{% trans_default_domain 'BezSupportBundle' %}
+{% block bez_support_content %}
+    {{  "Create a ticket"|trans }}
+    <form action="" {{ form_enctype(ticket_form) }} method="post" action="">
+        {{ form_widget(ticket_form) }}
+        <div>
+            <button type="submit">{{ 'Submit ticket'|trans }}</button>
+        </div>
+    </form>
+{% endblock %}

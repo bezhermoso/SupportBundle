@@ -4,7 +4,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="bez_support_new_ticket" pattern="/support/ticket/new">
+    <route id="bez_support_create_ticket" pattern="/support/ticket/new">
         <default key="_controller">BezSupportBundle:Ticket:new</default>
+    </route>
+
+    <route id="bez_support_create_ticket_completed" pattern="/support/ticket/new_completed">
+        <default key="_controller">BezSupportBundle:Ticket:newCompleted</default>
     </route>
 </routes>

@@ -27,6 +27,7 @@ class CommentType extends AbstractType
     protected $commentClass;
 
     /**
+     * @param $commentClass
      * @param SecurityContextInterface $security
      */
     public function __construct($commentClass, SecurityContextInterface $security = null)

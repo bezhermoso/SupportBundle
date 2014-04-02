@@ -17,7 +17,7 @@ namespace Bez\SupportBundle\Entity;
  * @author Bezalel Hermoso <bezalelhermoso@gmail.com>
  * @package Bez\SupportBundle\Entity
  */
-class GuestAuthor implements AuthorInterface
+class GuestAuthor implements AuthorInterface, \ArrayAccess
 {
     /**
      * @var GuestCompositionInterface
@@ -80,5 +80,43 @@ class GuestAuthor implements AuthorInterface
     public function setName($name)
     {
        $this->composition->setAuthorName($name);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return in_array($offset, array('name', 'email'));
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        $method = 'get' . ucfirst($offset);
+        return call_user_func(array($this, $method));
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        $method = 'set' . ucfirst($offset);
+        call_user_func(array($this, $method), $value);
+    }
+
+    /**
+     * @param mixed $offset
+     * @throws \LogicException
+     */
+    public function offsetUnset($offset)
+    {
+        throw new \LogicException('Cannot offset property in ' . __CLASS__ . ' via array access.');
     }
 }
