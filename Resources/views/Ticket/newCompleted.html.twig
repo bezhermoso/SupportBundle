@@ -1,0 +1,6 @@
+{% trans_default_domain 'BezSupportBundle' %}
+{% block bez_support_content %}
+    {% for message in app.session.flashBag.get('success') %}
+        <div>{{ message }}</div>
+    {% endfor %}
+{% endblock %}

@@ -15,6 +15,7 @@ use Bez\SupportBundle\Entity\TicketInterface;
 use Bez\SupportBundle\Event\FilterTicketResponseEvent;
 use Bez\SupportBundle\Event\FormEvent;
 use Bez\SupportBundle\Form\TicketType;
+use Bez\SupportBundle\Query\CommentQuery;
 use Bez\SupportBundle\SupportEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -45,7 +46,6 @@ class TicketController extends Controller
         }
 
         $form->setData($ticket);
-
 
         if ($request->getMethod() == 'POST') {
 
@@ -78,8 +78,8 @@ class TicketController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function newSuccessAction(Request $request)
+    public function newCompletedAction(Request $request)
     {
-        return $this->get('templating')->renderResponse('BezSupportBundle:Ticket:newSuccess.html.twig');
+        return $this->get('templating')->renderResponse('BezSupportBundle:Ticket:newCompleted.html.twig');
     }
 } 
