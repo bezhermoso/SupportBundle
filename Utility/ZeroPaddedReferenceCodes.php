@@ -21,7 +21,7 @@ use Bez\SupportBundle\Entity\TicketInterface;
  * @author Bezalel Hermoso <bezalelhermoso@gmail.com>
  * @package Bez\SupportBundle\Utility
  */
-class ReferenceCodeGenerator implements ReferenceCodeGeneratorInterface
+class ZeroPaddedReferenceCodes implements ReferenceCodeGeneratorInterface
 {
     /**
      * @param TicketInterface $ticket
