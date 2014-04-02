@@ -15,10 +15,21 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 
+/**
+ * Class TicketRefCodeListener
+ *
+ *
+ *
+ * @author Bezalel Hermoso <bezalelhermoso@gmail.com>
+ * @package Bez\SupportBundle\Doctrine
+ */
 class TicketRefCodeListener implements EventSubscriber
 {
     protected $refCodeGenerator;
 
+    /**
+     * @param ReferenceCodeGeneratorInterface $refCodeGenerator
+     */
     public function __construct(ReferenceCodeGeneratorInterface $refCodeGenerator)
     {
         $this->refCodeGenerator = $refCodeGenerator;

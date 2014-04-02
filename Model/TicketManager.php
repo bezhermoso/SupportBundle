@@ -28,7 +28,7 @@ abstract class TicketManager implements TicketManagerInterface
     public function createTicket()
     {
         $class = $this->getTicketClass();
-        return $class();
+        return new $class();
     }
 
     /**

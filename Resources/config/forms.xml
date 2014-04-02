@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <!--
+    <parameters>
+        <parameter key="bez_support.example.class">Bez\SupportBundle\Example</parameter>
+    </parameters>
+
+    <services>
+        <service id="bez_support.example" class="%bez_support.example.class%">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
+        </service>
+    </services>
+    -->
+    <services>
+        <service abstract="true"
+                 class="Bez\SupportBundle\Form\Factory\AbstractFormFactory"
+                 id="bez_support.form_factory.abstract">
+            <!--Argument index seems to be not recognized. Until then, abstracting this does not provide much help.-->
+            <argument index="0" type="service" id="form.factory" />
+            <argument index="2" type="collection" />
+            <argument index="3" type="collection" />
+        </service>
+
+        <service id="bez_support.form_factory.ticket"
+                 class="Bez\SupportBundle\Form\Factory\TicketFormFactory">
+            <argument index="0" type="service" id="form.factory" />
+            <argument index="1">ticket</argument>
+            <argument index="2" type="collection" />
+            <argument index="3" type="collection" />
+        </service>
+
+        <service id="bez_support.form_factory.comment"
+                 class="Bez\SupportBundle\Form\Factory\CommentFormFactory">
+            <argument index="0" type="service" id="form.factory" />
+            <argument index="1">comment</argument>
+            <argument index="2" type="collection" />
+            <argument index="3" type="collection" />
+        </service>
+
+        <service id="bez_support.form_type.ticket" class="Bez\SupportBundle\Form\TicketType">
+            <argument>%bez_support.orm.ticket_class%</argument>
+            <tag name="form.type" alias="bez_support_ticket" />
+        </service>
+
+        <service id="bez_support.form_type.comment" class="Bez\SupportBundle\Form\CommentType">
+            <argument>%bez_support.orm.comment_class%</argument>
+            <tag name="form.type" alias="bez_support_comment" />
+        </service>
+    </services>
+</container>

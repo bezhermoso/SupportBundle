@@ -8,7 +8,7 @@
 
 namespace Bez\SupportBundle\Doctrine;
 
-use Bez\SupportBundle\Entity\AuthorInterface;
+
 use Bez\SupportBundle\Entity\GuestAuthor;
 use Bez\SupportBundle\Entity\TicketInterface;
 use Bez\SupportBundle\Model\TicketManager as BaseTicketManager;
@@ -58,7 +58,7 @@ class TicketManager extends BaseTicketManager
      */
     public function findTicketBy($criteria)
     {
-
+        return $this->repository->findBy($criteria);
     }
 
     /**

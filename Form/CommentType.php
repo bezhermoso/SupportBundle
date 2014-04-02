@@ -24,11 +24,14 @@ class CommentType extends AbstractType
      */
     protected $security;
 
+    protected $commentClass;
+
     /**
      * @param SecurityContextInterface $security
      */
-    public function __construct(SecurityContextInterface $security = null)
+    public function __construct($commentClass, SecurityContextInterface $security = null)
     {
+        $this->commentClass = $commentClass;
         $this->security = $security;
     }
 
@@ -75,7 +78,7 @@ class CommentType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Bez\SupportBundle\Entity\CommentInterface'
+            'data_class' => $this->commentClass,
         ));
     }
 

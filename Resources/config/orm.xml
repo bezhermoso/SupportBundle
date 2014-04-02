@@ -19,10 +19,21 @@
     -->
     <parameters>
        <parameter key="bez_support.ticket_manager.class">Bez\SupportBundle\Doctrine\TicketManager</parameter>
+       <parameter key="bez_support.orm.entity_manager">default</parameter>
+       <parameter key="bez_support.orm.ticket_class" type="constant">NULL</parameter>
+       <parameter key="bez_support.orm.comment_class" type="constant">NULL</parameter>
     </parameters>
     <services>
-        <service id="bez_support.ticket_manager" class="%bez_support.ticket_manager.class%">
 
+        <service id="bez_support.orm.entity_manager"
+                 class="Doctrine\ORM\EntityManager"
+                 factory-service="doctrine" factory-method="getManager">
+           <argument>%bez_support.orm.entity_manager%</argument>
+         </service>
+
+        <service id="bez_support.ticket_manager" class="%bez_support.ticket_manager.class%">
+            <argument type="service" id="bez_support.orm.entity_manager" />
+            <argument>%bez_support.orm.ticket_class%</argument>
         </service>
     </services>
 </container>

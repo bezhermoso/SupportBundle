@@ -17,6 +17,16 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
  */
 class TicketType extends AbstractType
 {
+    protected $ticketClass;
+
+    /**
+     * @param $ticketClass
+     */
+    public function __construct($ticketClass)
+    {
+        $this->ticketClass = $ticketClass;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -53,7 +63,7 @@ class TicketType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Bez\SupportBundle\Entity\TicketInterface'
+            'data_class' => $this->ticketClass
         ));
     }
 
