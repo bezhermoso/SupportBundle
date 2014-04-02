@@ -2,6 +2,7 @@
 
 namespace Bez\SupportBundle\DependencyInjection;
 
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,10 +21,35 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('bez_support');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('ticket_class')->cannotBeEmpty()->isRequired()->end()
+                ->scalarNode('comment_class')->cannotBeEmpty()->isRequired()->end()
+                ->scalarNode('author_class')->cannotBeEmpty()->isRequired()->end()
+                ->scalarNode('object_manager_name')->defaultNull()->end()
+            ->end();
+
+        $this->attachServiceConfig($rootNode);
 
         return $treeBuilder;
+    }
+
+    /**
+     * @param ArrayNodeDefinition $node
+     */
+    private function attachServiceConfig(ArrayNodeDefinition $node)
+    {
+        $node->addDefaultsIfNotSet()
+             ->children()
+                ->arrayNode('services')
+                    ->addDefaultsIfNotSet()
+                        ->children()
+                            ->scalarNode('ticket_manager')->defaultValue('bez_support.ticket_manager.default')->end()
+                            ->scalarNode('comment_manager')->defaultValue('bez_support.ticket_manager.default')->end()
+                            ->scalarNode('ref_code_generator')->defaultValue('bez_support.ref_code_generator.default')->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 }

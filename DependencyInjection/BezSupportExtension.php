@@ -26,5 +26,11 @@ class BezSupportExtension extends Extension
         $loader->load('orm.xml');
         $loader->load('forms.xml');
         $loader->load('listeners.xml');
+
+        $container->setAlias('bez_support.ticket_manager', $config['services']['ticket_manager']);
+        $container->setAlias('bez_support.comment_manager', $config['services']['comment_manager']);
+        $container->setAlias('bez_support.ref_code_generator', $config['services']['ref_code_generator']);
+
+        $container->setParameter('bez_support.orm.entity_manager', $config['object_manager_name']);
     }
 }

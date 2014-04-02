@@ -29,19 +29,6 @@
 
         <service id="bez_support.ref_code_generator.default" class="%bez_support.ref_code_generator.class%" />
 
-        <service id="bez_support.ticket_manager"
-                 class="Bez\SupportBundle\Model\TicketManagerInterface"
-                 alias="bez_support.ticket_manager.default" />
-
-
-        <service id="bez_support.comment_manager"
-                 class="Bez\SupportBundle\Model\CommentManagerInterface"
-                 alias="bez_support.ticket_manager.default" />
-
-        <service id="bez_support.ref_code_generator"
-                 class="Bez\SupportBundle\Utility\ReferenceCodeGeneratorInterface"
-                 alias="bez_support.ref_code_generator.default"></service>
-
         <service id="bez_support.orm.timestamp_listener"
                  class="Bez\SupportBundle\Doctrine\TimestampListener">
             <tag name="doctrine.event_subscriber"></tag>
