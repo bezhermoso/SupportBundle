@@ -41,7 +41,7 @@ interface CommentInterface
      * @param AuthorInterface $author
      * @return void
      */
-    public function setAuthor(AuthorInterface $author);
+    public function setAuthor(AuthorInterface $author = NULL);
 
     /**
      * @return string

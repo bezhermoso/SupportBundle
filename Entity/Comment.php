@@ -55,11 +55,27 @@ abstract class Comment implements CommentInterface, GuestCompositionInterface
     protected $authorEmail = null;
 
     /**
+     * @var GuestAuthor
+     */
+    protected $guestAuthor;
+
+    /**
      * @param \Bez\SupportBundle\Entity\AuthorInterface $author
      */
-    public function setAuthor(AuthorInterface $author)
+    public function setAuthor(AuthorInterface $author = NULL)
     {
-        $this->author = $author;
+        if ($author == null) {
+            $this->authorEmail = null;
+            $this->authorName = null;
+            $this->author = null;
+        } elseif ($author instanceof GuestAuthor) {
+            $this->guestAuthor = $author;
+            $this->author = null;
+            $this->authorName = null;
+            $this->authorEmail = null;
+        } else {
+            $this->author = $author;
+        }
     }
 
     /**
@@ -67,8 +83,11 @@ abstract class Comment implements CommentInterface, GuestCompositionInterface
      */
     public function getAuthor()
     {
-        if (!$this->author && ($this->authorName !== null || $this->authorEmail !== null)) {
-            $this->author = new GuestAuthor($this);
+        if (!$this->author && !$this->guestAuthor && ($this->authorName !== null || $this->authorEmail !== null)) {
+            $this->guestAuthor = new GuestAuthor($this);
+            return $this->guestAuthor;
+        } elseif (!$this->author && $this->guestAuthor) {
+            return $this->guestAuthor;
         }
         return $this->author;
     }
@@ -92,7 +111,7 @@ abstract class Comment implements CommentInterface, GuestCompositionInterface
     /**
      * @param \DateTime $created
      */
-    public function setCreated($created)
+    public function setCreatedDate(\DateTime $created)
     {
         $this->created = $created;
     }
@@ -100,7 +119,7 @@ abstract class Comment implements CommentInterface, GuestCompositionInterface
     /**
      * @return \DateTime
      */
-    public function getCreated()
+    public function getCreatedDate()
     {
         return $this->created;
     }
@@ -128,5 +147,40 @@ abstract class Comment implements CommentInterface, GuestCompositionInterface
     {
         return $this->responseTo;
     }
+
+    /**
+     * @return string
+     */
+    public function getAuthorName()
+    {
+        return $this->authorName;
+    }
+
+    /**
+     * @param string $name
+     * @return void
+     */
+    public function setAuthorName($name)
+    {
+        $this->authorName = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthorEmail()
+    {
+        return $this->authorEmail;
+    }
+
+    /**
+     * @param string $email
+     * @return void
+     */
+    public function setAuthorEmail($email)
+    {
+        $this->authorEmail = $email;
+    }
+
 
 }

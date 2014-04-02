@@ -8,6 +8,7 @@
         <service id="bez_support.subscriber.flash_messages" class="Bez\SupportBundle\EventListener\FlashMessages">
             <argument type="service" id="session" />
             <argument type="service" id="translator" />
+            <tag name="kernel.event_subscriber" />
         </service>
     </services>
 </container>

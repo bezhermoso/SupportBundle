@@ -9,9 +9,11 @@
 namespace Bez\SupportBundle\Doctrine;
 
 
+use Bez\SupportBundle\Entity\CommentInterface;
 use Bez\SupportBundle\Entity\GuestAuthor;
 use Bez\SupportBundle\Entity\TicketInterface;
 use Bez\SupportBundle\Model\TicketManager as BaseTicketManager;
+use Bez\SupportBundle\Query\QueryInterface;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -35,21 +37,38 @@ class TicketManager extends BaseTicketManager
     protected $ticketClass;
 
     /**
+     * @var string
+     */
+    protected $commentClass;
+
+    /**
      * @var \Doctrine\ORM\EntityRepository
      */
-    protected $repository;
+    protected $tickets;
+
+    /**
+     * @var \Doctrine\ORM\EntityRepository
+     */
+    protected $comments;
 
     /**
      * @param EntityManager $em
      * @param $ticketClass
+     * @param $commentClass
      */
-    public function __construct(EntityManager $em, $ticketClass)
+    public function __construct(EntityManager $em, $ticketClass, $commentClass)
     {
         $this->em = $em;
-        $this->repository = $em->getRepository($ticketClass);
+        $this->tickets = $em->getRepository($ticketClass);
 
         $metadata = $em->getClassMetadata($ticketClass);
         $this->ticketClass = $metadata->getName();
+
+        $this->comments = $em->getRepository($commentClass);
+
+        $metadata = $em->getClassMetadata($commentClass);
+        $this->commentClass = $metadata->getName();
+
     }
 
     /**
@@ -58,7 +77,7 @@ class TicketManager extends BaseTicketManager
      */
     public function findTicketBy($criteria)
     {
-        return $this->repository->findBy($criteria);
+        return $this->tickets->findBy($criteria);
     }
 
     /**
@@ -76,6 +95,8 @@ class TicketManager extends BaseTicketManager
                 unset($criteria['author']);
             }
         }
+
+        return $this->tickets->findBy($criteria);
     }
 
     /**
@@ -98,5 +119,41 @@ class TicketManager extends BaseTicketManager
     public function getTicketClass()
     {
         return $this->ticketClass;
+    }
+
+    /**
+     * @param TicketInterface $ticket
+     * @param \Bez\SupportBundle\Query\QueryInterface $query
+     * @return CommentInterface[]
+     */
+    public function findCommentsOnTicket(TicketInterface $ticket, QueryInterface $query)
+    {
+        $this->comments->findBy(
+                            array('ticket' => $ticket),
+                            $query->getOrderBy(),
+                            $query->getMaxResults(),
+                            $query->getStartAt());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCommentClass()
+    {
+        return $this->commentClass;
+    }
+
+    /**
+     * @param CommentInterface $comment
+     * @param bool $flush
+     * @return void
+     */
+    public function saveComment(CommentInterface $comment, $flush = true)
+    {
+        $this->em->persist($comment);
+
+        if ($flush) {
+            $this->em->flush();
+        }
     }
 }

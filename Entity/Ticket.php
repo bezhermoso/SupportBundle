@@ -34,6 +34,11 @@ abstract class Ticket implements TicketInterface, GuestCompositionInterface
     protected $author;
 
     /**
+     * @var GuestAuthor
+     */
+    protected $guestAuthor;
+
+    /**
      * @var string
      */
     protected $subject;
@@ -84,9 +89,15 @@ abstract class Ticket implements TicketInterface, GuestCompositionInterface
         if ($author == null) {
             $this->authorEmail = null;
             $this->authorName = null;
+            $this->author = null;
+        } elseif ($author instanceof GuestAuthor) {
+            $this->guestAuthor = $author;
+            $this->author = null;
+            $this->authorName = null;
+            $this->authorEmail = null;
+        } else {
+            $this->author = $author;
         }
-
-        $this->author = $author;
     }
 
     /**
@@ -94,9 +105,13 @@ abstract class Ticket implements TicketInterface, GuestCompositionInterface
      */
     public function getAuthor()
     {
-        if (!$this->author && ($this->authorName !== null || $this->authorEmail !== null)) {
-            $this->author = new GuestAuthor($this);
+        if (!$this->author && !$this->guestAuthor && ($this->authorName !== null || $this->authorEmail !== null)) {
+            $this->guestAuthor = new GuestAuthor($this);
+            return $this->guestAuthor;
+        } elseif (!$this->author && $this->guestAuthor) {
+            return $this->guestAuthor;
         }
+
         return $this->author;
     }
 

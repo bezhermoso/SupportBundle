@@ -9,8 +9,9 @@
 namespace Bez\SupportBundle\EventListener;
 
 
-use Composer\EventDispatcher\EventSubscriberInterface;
+use Bez\SupportBundle\SupportEvents;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Translation\TranslatorInterface;
 
@@ -20,7 +21,9 @@ class FlashMessages implements EventSubscriberInterface
 
     protected $translator;
 
-    protected static $messages = array();
+    protected static $messages = array(
+        SupportEvents::CREATE_TICKET_COMPLETED => 'Your ticket has been submitted.',
+    );
 
     /**
      * @param Session $session

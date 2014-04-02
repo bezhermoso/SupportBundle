@@ -6,9 +6,12 @@
 
     <parameters>
        <parameter key="bez_support.ticket_manager.class">Bez\SupportBundle\Doctrine\TicketManager</parameter>
+       <parameter key="bez_support.comment_manager.class">Bez\SupportBundle\Doctrine\TicketManager</parameter>
        <parameter key="bez_support.orm.entity_manager">default</parameter>
        <parameter key="bez_support.orm.ticket_class" type="constant">NULL</parameter>
        <parameter key="bez_support.orm.comment_class" type="constant">NULL</parameter>
+       <parameter key="bez_support.orm.author_class" type="constant">NULL</parameter>
+       <parameter key="bez_support.ref_code_generator.class">Bez\SupportBundle\Utility\ZeroPaddedReferenceCodes</parameter>
     </parameters>
     <services>
 
@@ -18,9 +21,36 @@
            <argument>%bez_support.orm.entity_manager%</argument>
          </service>
 
-        <service id="bez_support.ticket_manager" class="%bez_support.ticket_manager.class%">
+        <service id="bez_support.ticket_manager.default" class="%bez_support.ticket_manager.class%">
             <argument type="service" id="bez_support.orm.entity_manager" />
             <argument>%bez_support.orm.ticket_class%</argument>
+            <argument>%bez_support.orm.comment_class%</argument>
+        </service>
+
+        <service id="bez_support.ref_code_generator.default" class="%bez_support.ref_code_generator.class%" />
+
+        <service id="bez_support.ticket_manager"
+                 class="Bez\SupportBundle\Model\TicketManagerInterface"
+                 alias="bez_support.ticket_manager.default" />
+
+
+        <service id="bez_support.comment_manager"
+                 class="Bez\SupportBundle\Model\CommentManagerInterface"
+                 alias="bez_support.ticket_manager.default" />
+
+        <service id="bez_support.ref_code_generator"
+                 class="Bez\SupportBundle\Utility\ReferenceCodeGeneratorInterface"
+                 alias="bez_support.ref_code_generator.default"></service>
+
+        <service id="bez_support.orm.timestamp_listener"
+                 class="Bez\SupportBundle\Doctrine\TimestampListener">
+            <tag name="doctrine.event_subscriber"></tag>
+         </service>
+
+        <service id="bez_support.orm.ref_code_listener"
+                 class="Bez\SupportBundle\Doctrine\TicketRefCodeListener">
+            <argument type="service" id="bez_support.ref_code_generator" />
+            <tag name="doctrine.event_subscriber" />
         </service>
     </services>
 </container>

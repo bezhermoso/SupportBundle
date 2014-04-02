@@ -56,7 +56,7 @@ class TicketRefCodeListener implements EventSubscriber
         $em = $args->getEntityManager();
 
         if ($object instanceof TicketInterface) {
-            if ($object->getReferenceCode()) {
+            if ($object->getReferenceCode() == false) {
                 $this->refCodeGenerator->generate($object);
                 $em->persist($object);
                 $em->flush();

@@ -8,6 +8,7 @@
 
 namespace Bez\SupportBundle\Model;
 use Bez\SupportBundle\Entity\AuthorInterface;
+use Bez\SupportBundle\Entity\CommentInterface;
 use Bez\SupportBundle\Entity\TicketInterface;
 
 
@@ -29,11 +30,6 @@ interface TicketManagerInterface
      * @return void
      */
     public function saveTicket(TicketInterface $ticket);
-
-    /**
-     * @return string
-     */
-    public function getTicketClass();
 
     /**
      * @param $id
