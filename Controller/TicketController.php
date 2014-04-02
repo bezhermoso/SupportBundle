@@ -19,12 +19,13 @@ use Bez\SupportBundle\SupportEvents;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class TicketController extends Controller
 {
     /**
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function newAction(Request $request)
     {
@@ -71,5 +72,14 @@ class TicketController extends Controller
         return $this->get('templating')->renderResponse('BezSupportBundle:Ticket:new.html.twig', array(
             'ticket_form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function newSuccessAction(Request $request)
+    {
+        return $this->get('templating')->renderResponse('BezSupportBundle:Ticket:newSuccess.html.twig');
     }
 } 
