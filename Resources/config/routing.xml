@@ -11,4 +11,12 @@
     <route id="bez_support_create_ticket_completed" pattern="/support/ticket/new_completed">
         <default key="_controller">BezSupportBundle:Ticket:newCompleted</default>
     </route>
+
+    <route id="bez_support_list_tickets" pattern="/support/ticket/list">
+        <default key="_controller">BezSupportBundle:Ticket:list</default>
+    </route>
+
+    <route id="bez_support_view_ticket" pattern="/support/ticket/view/{id}">
+        <default key="_controller">BezSupportBundle:Ticket:view</default>
+    </route>
 </routes>

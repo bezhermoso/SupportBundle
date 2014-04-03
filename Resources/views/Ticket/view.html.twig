@@ -1,0 +1,8 @@
+{% trans_default_domain "BezSupportBundle" %}
+{% block bez_support_content %}
+    <h2>{{ ticket.subject }}</h2>
+    <em>{{ ticket.author.name }} wrote:</em>
+    <blockquote>
+        {{ ticket.body }}
+    </blockquote>
+{% endblock  %}

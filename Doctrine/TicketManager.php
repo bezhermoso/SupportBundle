@@ -77,7 +77,7 @@ class TicketManager extends BaseTicketManager
      */
     public function findTicketBy($criteria)
     {
-        return $this->tickets->findBy($criteria);
+        return $this->tickets->findOneBy($criteria);
     }
 
     /**
@@ -155,5 +155,13 @@ class TicketManager extends BaseTicketManager
         if ($flush) {
             $this->em->flush();
         }
+    }
+
+    /**
+     * @return array|\Bez\SupportBundle\Entity\TicketInterface[]
+     */
+    public function findAllTickets()
+    {
+        return $this->tickets->findAll();
     }
 }

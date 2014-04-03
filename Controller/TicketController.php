@@ -82,4 +82,37 @@ class TicketController extends Controller
     {
         return $this->get('templating')->renderResponse('BezSupportBundle:Ticket:newCompleted.html.twig');
     }
+
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    public function listAction(Request $request)
+    {
+
+        $ticketManager = $this->get('bez_support.ticket_manager');
+
+        $tickets = $ticketManager->findAllTickets();
+
+        return $this->get('templating')->renderResponse('BezSupportBundle:Ticket:list.html.twig', array(
+            'tickets' => $tickets,
+        ));
+    }
+
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function viewAction(Request $request, $id)
+    {
+        $ticketManager = $this->get('bez_support.ticket_manager');
+
+        $ticket = $ticketManager->findTicketByReferenceCode($id);
+
+        return $this->get('templating')->renderResponse('BezSupportBundle:Ticket:view.html.twig', array(
+            'ticket' => $ticket,
+        ));
+
+    }
 } 

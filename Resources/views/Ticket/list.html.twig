@@ -1,0 +1,17 @@
+{% trans_default_domain 'BezSupportBundle' %}
+{% block bez_support_content %}
+    <h2>
+        {{ "Tickets"|trans }}
+    </h2>
+    <ul>
+        {% for ticket in tickets %}
+            <li>
+                "<a href="{{ path('bez_support_view_ticket', {id: ticket.referenceCode}) }}">{{ ticket.subject }}</a>"
+                <br/>
+                from {{ ticket.author.name }}
+            </li>
+        {% else %}
+            <li>{{ "No tickets."|trans }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

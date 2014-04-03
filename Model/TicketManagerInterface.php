@@ -48,4 +48,9 @@ interface TicketManagerInterface
      * @return TicketInterface[]
      */
     public function findTicketsByAuthor(AuthorInterface $author);
+
+    /**
+     * @return TicketInterface[]
+     */
+    public function findAllTickets();
 }
