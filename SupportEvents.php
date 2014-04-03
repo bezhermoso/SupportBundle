@@ -14,4 +14,8 @@ class SupportEvents
     const CREATE_TICKET_SUCCESS = 'bez_support.create_ticket.success';
 
     const CREATE_TICKET_COMPLETED = 'bez_support.create_ticket.completed';
-} 
+
+    const CREATE_COMMENT_SUCCESS = 'bez_support.create_comment.success';
+
+    const CREATE_COMMENT_COMPLETED = 'bez_support.create_comment.completed';
+}

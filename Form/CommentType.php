@@ -44,7 +44,7 @@ class CommentType extends AbstractType
     {
         $builder->add('body', 'textarea');
 
-        $builder->addEventListener(FormEvents::POST_SUBMIT, array($this, 'onPostSubnmit'));
+        $builder->addEventListener(FormEvents::POST_SUBMIT, array($this, 'onPostSubmit'));
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPresetData'));
     }
 
@@ -57,7 +57,8 @@ class CommentType extends AbstractType
             return;
         }
 
-        if ($this->security->isGranted('ROLE_SUPPORT_STAFF')) {
+        if ($this->security->getToken()
+        && $this->security->isGranted('ROLE_SUPPORT_STAFF')) {
             /**
              * @todo Add status resolution input fields
              */
@@ -88,6 +89,6 @@ class CommentType extends AbstractType
      */
     public function getName()
     {
-        return 'bez_support_ticket_comment';
+        return 'bez_support_comment';
     }
 }

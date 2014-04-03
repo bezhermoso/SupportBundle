@@ -25,7 +25,7 @@ interface CommentManagerInterface
      * @param \Bez\SupportBundle\Query\QueryInterface $query
      * @return CommentInterface[]
      */
-    public function findCommentsOnTicket(TicketInterface $ticket, QueryInterface $query);
+    public function findCommentsOnTicket(TicketInterface $ticket, QueryInterface $query = NULL);
 
     /**
      * @param CommentInterface $comment

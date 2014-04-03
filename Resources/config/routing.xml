@@ -16,7 +16,11 @@
         <default key="_controller">BezSupportBundle:Ticket:list</default>
     </route>
 
-    <route id="bez_support_view_ticket" pattern="/support/ticket/view/{id}">
+    <route id="bez_support_view_ticket" pattern="/support/ticket/view/{ticket}">
         <default key="_controller">BezSupportBundle:Ticket:view</default>
+    </route>
+
+    <route id="bez_support_new_comment" pattern="/support/ticket/{ticket}/comment/new">
+        <default key="_controller">BezSupportBundle:Comment:new</default>
     </route>
 </routes>

@@ -101,17 +101,26 @@ class TicketController extends Controller
 
     /**
      * @param Request $request
-     * @param $id
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function viewAction(Request $request, $id)
+    public function viewAction(Request $request)
     {
         $ticketManager = $this->get('bez_support.ticket_manager');
+        $commentManager = $this->get('bez_support.comment_manager');
 
-        $ticket = $ticketManager->findTicketByReferenceCode($id);
+        $ticket = $ticketManager->findTicketByReferenceCode($request->get('ticket'));
+
+        if ($ticket == false) {
+            throw $this->createNotFoundException('Ticket not found.');
+        }
+
+        $comments = $commentManager->findCommentsOnTicket($ticket);
+
 
         return $this->get('templating')->renderResponse('BezSupportBundle:Ticket:view.html.twig', array(
             'ticket' => $ticket,
+            'comments' => $comments,
         ));
 
     }

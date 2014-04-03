@@ -5,4 +5,15 @@
     <blockquote>
         {{ ticket.body }}
     </blockquote>
+    <div>
+        <a href="{{ path('bez_support_new_comment', {ticket: ticket.referenceCode}) }}">Add comment</a>
+    </div>
+    <h4>
+        {{ "Comments"|trans }}
+    </h4>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.body }}</li>
+        {% endfor %}
+    </ul>
 {% endblock  %}

@@ -36,6 +36,10 @@ class BezSupportExtension extends Extension
         $container->setParameter('bez_support.config', $config);
         $container->setParameter('bez_support.orm.entity_manager', $config['object_manager_name']);
 
-        $container->addCompilerPass(new TargetEntityResolverPass());
+        $container->setParameter('bez_support.orm.ticket_class', $config['ticket_class']);
+        $container->setParameter('bez_support.orm.comment_class', $config['comment_class']);
+        $container->setParameter('bez_support.orm.author_class', $config['author_class']);
+
+
     }
 }

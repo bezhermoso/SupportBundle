@@ -20,7 +20,9 @@
 
         <many-to-one field="author" target-entity="Bez\SupportBundle\Entity\AuthorInterface" />
 
-        <many-to-one field="responseTo" target-entity="Bez\SupportBundle\Entity\TicketInterface" />
+        <many-to-one field="responseTo" target-entity="Bez\SupportBundle\Entity\TicketInterface">
+            <join-column name="response_to_id" referenced-column-name="id"></join-column>
+        </many-to-one>
 
     </mapped-superclass>
 </doctrine-mapping>

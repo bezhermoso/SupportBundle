@@ -126,13 +126,13 @@ class TicketManager extends BaseTicketManager
      * @param \Bez\SupportBundle\Query\QueryInterface $query
      * @return CommentInterface[]
      */
-    public function findCommentsOnTicket(TicketInterface $ticket, QueryInterface $query)
+    public function findCommentsOnTicket(TicketInterface $ticket, QueryInterface $query = NULL)
     {
-        $this->comments->findBy(
-                            array('ticket' => $ticket),
-                            $query->getOrderBy(),
-                            $query->getMaxResults(),
-                            $query->getStartAt());
+        return $this->comments->findBy(
+                            array('responseTo' => $ticket),
+                            $query ? $query->getOrderBy() : null,
+                            $query ? $query->getMaxResults() : null,
+                            $query ? $query->getStartAt() : null);
     }
 
     /**

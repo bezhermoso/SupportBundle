@@ -8,9 +8,6 @@
        <parameter key="bez_support.ticket_manager.class">Bez\SupportBundle\Doctrine\TicketManager</parameter>
        <parameter key="bez_support.comment_manager.class">Bez\SupportBundle\Doctrine\TicketManager</parameter>
        <parameter key="bez_support.orm.entity_manager">default</parameter>
-       <parameter key="bez_support.orm.ticket_class" type="constant">NULL</parameter>
-       <parameter key="bez_support.orm.comment_class" type="constant">NULL</parameter>
-       <parameter key="bez_support.orm.author_class" type="constant">NULL</parameter>
        <parameter key="bez_support.ref_code_generator.class">Bez\SupportBundle\Utility\ZeroPaddedReferenceCodes</parameter>
     </parameters>
     <services>

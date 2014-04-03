@@ -6,7 +6,7 @@
     <ul>
         {% for ticket in tickets %}
             <li>
-                "<a href="{{ path('bez_support_view_ticket', {id: ticket.referenceCode}) }}">{{ ticket.subject }}</a>"
+                "<a href="{{ path('bez_support_view_ticket', {ticket: ticket.referenceCode}) }}">{{ ticket.subject }}</a>"
                 <br/>
                 from {{ ticket.author.name }}
             </li>

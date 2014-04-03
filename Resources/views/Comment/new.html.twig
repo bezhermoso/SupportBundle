@@ -1,0 +1,8 @@
+{% trans_default_domain "BezSupportBundle" %}
+{% block bez_support_content %}
+    <h2>{{ "Reply to"|trans }} "{{ ticket.subject }}"</h2>
+    <form action="" method="post" {{ form_enctype(comment_form) }}>
+        {{ form_widget(comment_form) }}
+        <button type="submit">{{ "Submit comment"|trans }}</button>
+    </form>
+{% endblock %}
