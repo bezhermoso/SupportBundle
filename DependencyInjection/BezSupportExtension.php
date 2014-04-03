@@ -2,8 +2,10 @@
 
 namespace Bez\SupportBundle\DependencyInjection;
 
+use Bez\SupportBundle\DependencyInjection\CompilerPass\TargetEntityResolverPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -31,6 +33,9 @@ class BezSupportExtension extends Extension
         $container->setAlias('bez_support.comment_manager', $config['services']['comment_manager']);
         $container->setAlias('bez_support.ref_code_generator', $config['services']['ref_code_generator']);
 
+        $container->setParameter('bez_support.config', $config);
         $container->setParameter('bez_support.orm.entity_manager', $config['object_manager_name']);
+
+        $container->addCompilerPass(new TargetEntityResolverPass());
     }
 }
