@@ -27,6 +27,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('comment_class')->cannotBeEmpty()->isRequired()->end()
                 ->scalarNode('author_class')->cannotBeEmpty()->isRequired()->end()
                 ->scalarNode('object_manager_name')->defaultNull()->end()
+                ->booleanNode('resolve_target_entities')->defaultValue(true)->end()
             ->end();
 
         $this->attachServiceConfig($rootNode);
