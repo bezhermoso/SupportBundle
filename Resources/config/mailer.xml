@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="bez_support.message_factory.default"
+                 class="Bez\SupportBundle\Mailer\Factory\MessageTemplate">
+            <argument type="service" id="templating" />
+            <argument>%bez_support.mailer.ticket_template%</argument>
+            <argument>%bez_support.mailer.comment_template%</argument>
+            <argument>%bez_support.mailer.from_name%</argument>
+            <argument>%bez_support.mailer.from_email%</argument>
+            <argument>%bez_support.mailer.inbox%</argument>
+        </service>
+
+        <service id="bez_support.mailer.default"
+                 class="Bez\SupportBundle\Mailer\SwiftMailer">
+            <argument type="service" id="swiftmailer.mailer" />
+        </service>
+    </services>
+</container>

@@ -9,6 +9,8 @@
 namespace Bez\SupportBundle\Controller;
 
 
+use Bez\SupportBundle\Entity\GuestAuthor;
+use Bez\SupportBundle\Entity\GuestCompositionInterface;
 use Bez\SupportBundle\Event\FilterCommentResponseEvent;
 use Bez\SupportBundle\Event\FormEvent;
 use Bez\SupportBundle\SupportEvents;
@@ -46,6 +48,14 @@ class CommentController extends Controller
         $comment = $commentManager->createComment();
 
         $comment->setResponseTo($ticket);
+
+        $isAnonymous = !$this->get('security.context')->getToken() ||
+            ($this->get('security.context')->getToken() && $this->get('security.context')->isGranted('IS_AUTHENTICATED_ANONYMOUSLY'));
+
+        if ($comment instanceof GuestCompositionInterface && $isAnonymous) {
+            $comment->setAuthor(new GuestAuthor($comment));
+        }
+
         $form = $formFactory->createForm();
 
         $form->setData($comment);

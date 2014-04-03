@@ -2,6 +2,7 @@
 
 namespace Bez\SupportBundle\Form;
 
+use Bez\SupportBundle\Entity\CommentInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -45,14 +46,24 @@ class CommentType extends AbstractType
         $builder->add('body', 'textarea');
 
         $builder->addEventListener(FormEvents::POST_SUBMIT, array($this, 'onPostSubmit'));
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPresetData'));
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPostsetData'));
     }
 
     /**
      * @param FormEvent $event
      */
-    public function onPresetData(FormEvent $event)
+    public function onPostsetData(FormEvent $event)
     {
+        $comment = $event->getData();
+
+        if (!$comment instanceof CommentInterface) {
+            return;
+        }
+
+        if ($comment->getAuthor()) {
+            $event->getForm()->add('author', 'bez_support_author');
+        }
+
         if (!$this->security) {
             return;
         }

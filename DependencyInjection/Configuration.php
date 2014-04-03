@@ -31,6 +31,7 @@ class Configuration implements ConfigurationInterface
             ->end();
 
         $this->attachServiceConfig($rootNode);
+        $this->attachMailerConfig($rootNode);
 
         return $treeBuilder;
     }
@@ -48,9 +49,43 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('ticket_manager')->defaultValue('bez_support.ticket_manager.default')->end()
                             ->scalarNode('comment_manager')->defaultValue('bez_support.ticket_manager.default')->end()
                             ->scalarNode('ref_code_generator')->defaultValue('bez_support.ref_code_generator.default')->end()
+                            ->scalarNode('mailer')->defaultValue('bez_support.mailer.default')->end()
                         ->end()
                     ->end()
                 ->end()
             ->end();
+    }
+
+    /**
+     * @param ArrayNodeDefinition $rootNode
+     */
+    private function attachMailerConfig(ArrayNodeDefinition $rootNode)
+    {
+        $rootNode->addDefaultsIfNotSet()
+                ->children()
+                    ->arrayNode('mailer')
+                        ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('from_email')->defaultValue('webmaster@example.com')->end()
+                                ->scalarNode('from_name')->defaultValue('Webmaster')->end()
+                                ->scalarNode('inbox')->defaultValue('webmaster@example.com')->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end();
+
+        $rootNode->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('email_templates')
+                            ->addDefaultsIfNotSet()
+                                ->children()
+                                    ->scalarNode('ticket')->defaultValue('BezSupportBundle:Email:ticket.txt.twig')->end()
+                                    ->scalarNode('comment')->defaultValue('BezSupportBundle:Email:comment.txt.twig')->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end();
+
+
     }
 }
